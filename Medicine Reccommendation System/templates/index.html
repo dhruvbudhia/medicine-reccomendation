@@ -10,7 +10,7 @@
         .logo {
             width: 50px;
             height: 50px;
-            color: black;
+            color: rgb(0, 0, 0);
             margin-top: 0;
             margin-left: 2px;
         }
@@ -21,15 +21,40 @@
             border-radius: 25px;
         }
         body {
-            background-image: url('static\medicine.webp');
+            background-color: #FDFFE2;
         }
+        .result-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .toggle-button {
+            padding: 8px 16px;
+            margin: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            border: none; 
+            cursor: pointer;
+            color: white; /* Default text color */
+        }
+        
+        .disease-button,
+        .description-button,
+        .precaution-button,
+        .medications-button,
+        .workouts-button,
+        .diets-button  { 
+            background-color: #5a7280; 
+        }
+        
     </style>
 </head>
 <body>   
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <!-- Logo at the top-left corner -->s
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-image: linear-gradient(to right, #1a2130, #343a40);"> 
+              <!-- Logo at the top-left corner -->s
             <div class="logo">
                 <img class="myimg" src="{{url_for('static',filename='img.png')}}" alt="">
             </div>
@@ -58,43 +83,45 @@
         </div>
     </nav>
 <!-- main form of page -->
-<h1 class="mt-4 my-4 text-center text-green">Medicine Recommendation And Disease Prediction</h1>
-<div class="container my-4 mt-4" style="background: #95D2B3; color: white; border-radius: 15px; padding: 40px;">
+<h1 class="mt-4 my-4 text-center text-green" style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Medicine Recommendation And Disease Prediction</h1>
+<div class="container my-4 mt-4" style="background: linear-gradient(to top, #609df9, #a1c4fd); color: white; border-radius: 15px; padding: 40px;">
     <form action="/predict" method="post">
         <div class="form-group">
             <label for="symptoms">Select Symptoms:</label>
             <input type="text" class="form-control", id="symptoms" name="symptoms" placeholder="type systems such as itching, sleeping, aching etc">
         </div>
         <br>
-        <button type="button" id="startSpeechRecognition" class="btn btn-primary" style="margin-left:3px;border:1px solid white; border-radius:20px;">
-            Start Speech Recognition
-        </button>
+        <div class="d-flex justify-content-between"> 
+            <button type="button" id="startSpeechRecognition" class="btn btn-primary btn-sm" style="border:1px solid transparent; border-radius:20px; background-image: linear-gradient(to right, #fad0c4 0%, #ffd1ff 99%); color: #1a2130;">
+                Start Speech Recognition
+            </button>
+
+            <button type="submit" class="btn btn-danger btn-sm" style="border-radius:20px; padding: 8px; width: 40%;">Predict</button> 
+        </div>
         <br>
 
         <!-- Display the transcribed text here -->
         <div name="mysysms" id="transcription"></div>
         <!-- <p>{{ message }}</p> -->
-        <br>
-
-        <button type="submit" class="btn btn-danger btn-lg" style="width: 100%; padding: 14px; margin-bottom: 5px;">Predict</button>
+       
     </form>
 </div>
 
+
 <!-- Results -->
 {% if predicted_disease %}
-<h1 class="text-center my-4 mt-4">AI System Results</h1>
+<h1 class="text-center my-4 mt-4" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">AI Generated Results</h1>
 <div class="container">
 
     <div class="result-container">
         <!-- Buttons to toggle display -->
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal" style="padding:4px;  margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F39334;color:black;">Disease</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#268AF3 ;color:black;">Description</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F371F9 ;color:black;">Precaution</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px;border-radius:5px; background:#F8576F ;color:black;">Medications</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#99F741 ;color:black;">Workouts</button>
-        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#E5E23D;color:black;">Diets</button>
+        <button class="toggle-button disease-button" data-bs-toggle="modal" data-bs-target="#diseaseModal">Disease</button>
+        <button class="toggle-button description-button" data-bs-toggle="modal" data-bs-target="#descriptionModal">Description</button>
+        <button class="toggle-button precaution-button" data-bs-toggle="modal" data-bs-target="#precautionModal">Precaution</button>
+        <button class="toggle-button medications-button" data-bs-toggle="modal" data-bs-target="#medicationsModal">Medications</button>
+        <button class="toggle-button workouts-button" data-bs-toggle="modal" data-bs-target="#workoutsModal">Workouts</button>
+        <button class="toggle-button diets-button" data-bs-toggle="modal" data-bs-target="#dietsModal">Diets</button></div>
     </div>
-</div>
 {% endif %}
 
 <!-- Disease Modal -->
