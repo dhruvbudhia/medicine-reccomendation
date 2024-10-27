@@ -34,7 +34,7 @@
       }
     </style>
   </head>
-  <body style="background-color: #fdffe2">
+  <body style="background-color: rgb(189, 183, 158)">
     <!-- Navbar  -->
     <nav
       class="navbar navbar-expand-xl navbar-dark bg-dark"
@@ -108,314 +108,200 @@
         font-weight: bold;
       "
     >
-      MedicineRecommendation And Disease Prediction
+      Medicine Recommendation and Disease Prediction
     </h1>
-    <div
-      class="container my-4 mt-4"
-      style="
-        background: linear-gradient(to top, #609df9, #a1c4fd);
-        color: white;
-        border-radius: 15px;
-        padding: 40px;
-      "
-    >
-      <form action="/predict" method="post">
-        <div class="form-group">
-          <label for="symptoms">Select Symptoms:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="symptoms"
-            name="symptoms"
-            placeholder="type systems such as itching, sleeping, aching etc"
-            value="{{ symptoms }}"
-          />
-        </div>
-        <br />
-        <div class="d-flex justify-content-end column-gap-1">
-          <button
-            type="button"
-            id="startSpeechRecognition"
-            class="btn btn-dark btn-sm"
-            style="border-radius: 20px; height: auto; width: 6%"
-          >
-            <i class="bi bi-mic-fill"></i>
-          </button>
-
-          <button
-            type="submit"
-            class="btn btn-danger btn-sm"
-            style="border-radius: 20px; padding: 8px; width: 10%"
-          >
-            Predict
-          </button>
-        </div>
-        <br />
-
-        <!-- Display the transcribed text here -->
-        <div name="mysysms" id="transcription"></div>
-        <!-- <p>{{ message }}</p> -->
-      </form>
-    </div>
-
-    <!-- Results -->
-    {% if predicted_disease %}
-    <h1
-      class="text-center my-4 mt-4"
-      style="
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-          'Lucida Sans', Arial, sans-serif;
-      "
-    >
-      Results:
-    </h1>
-    <div class="container">
-      <div
-        class="result-container"
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 20px;
-        "
-      >
-        <!-- Buttons to toggle display -->
-        <button
-          class="toggle-button disease-button"
-          data-bs-toggle="modal"
-          data-bs-target="#diseaseModal"
-        >
-          Disease
-        </button>
-        <button
-          class="toggle-button description-button"
-          data-bs-toggle="modal"
-          data-bs-target="#descriptionModal"
-        >
-          Description
-        </button>
-        <button
-          class="toggle-button precaution-button"
-          data-bs-toggle="modal"
-          data-bs-target="#precautionModal"
-        >
-          Precaution
-        </button>
-        <button
-          class="toggle-button medications-button"
-          data-bs-toggle="modal"
-          data-bs-target="#medicationsModal"
-        >
-          Medications
-        </button>
-        <button
-          class="toggle-button workouts-button"
-          data-bs-toggle="modal"
-          data-bs-target="#workoutsModal"
-        >
-          Workouts
-        </button>
-        <button
-          class="toggle-button diets-button"
-          data-bs-toggle="modal"
-          data-bs-target="#dietsModal"
-        >
-          Diets
-        </button>
-      </div>
-    </div>
-    {% endif %}
-
-    <!-- Disease Modal -->
-    <div
-      class="modal fade"
-      id="diseaseModal"
-      tabindex="-1"
-      aria-labelledby="diseaseModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div
-            class="modal-header"
-            style="background-color: #020606; color: white"
-          >
-            <!-- Set header background color inline -->
-            <h5 class="modal-title" id="diseaseModalLabel">
-              Predicted Disease
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              style="color: white"
-            ></button>
-          </div>
-          <div class="modal-body" style="background-color: #ffffff">
-            <!-- Set modal body background color inline -->
-            <p>{{ predicted_disease }}</p>
+    <div class="container my-5">
+      <div class="row">
+        <!-- Input Section -->
+        <div class="col-md-5">
+          <div class="card p-3 bg-light">
+            <h5 class="card-title text-center">Search your symptoms</h5>
+            <form action="/predict" method="post">
+              <input
+                type="text"
+                id="symptoms"
+                name="symptoms"
+                class="form-control mb-3"
+                placeholder="Enter symptoms"
+                value="{{ symptoms }}"
+              />
+              <div class="d-flex justify-content-end column-gap-2">
+                <button
+                  type="button"
+                  id="startSpeechRecognition"
+                  class="btn btn-secondary"
+                >
+                  <i class="bi bi-mic"></i>
+                </button>
+                <button type="submit" class="btn btn-danger">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </form>
+            <div name="mysysms" id="transcription"></div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Description Modal -->
-    <div
-      class="modal fade"
-      id="descriptionModal"
-      tabindex="-1"
-      aria-labelledby="descriptionModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div
-            class="modal-header"
-            style="background-color: #020606; color: white"
-          >
-            <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p>{{ dis_des }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+        <!-- Output Section -->
+        <div class="col-md-7">
+          <div class="card p-3">
+            <h5 class="card-title">Result</h5>
 
-    <!-- Precaution Modal -->
-    <div
-      class="modal fade"
-      id="precautionModal"
-      tabindex="-1"
-      aria-labelledby="precautionModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div
-            class="modal-header"
-            style="background-color: #020606; color: white"
-          >
-            <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <ul>
-              {% for i in my_precautions %}
-              <li>{{ i }}</li>
-              {% endfor %}
+            <!-- Navigation Tabs -->
+            <ul class="nav nav-tabs" id="resultTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="disease-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#disease"
+                  type="button"
+                  role="tab"
+                  aria-controls="disease"
+                  aria-selected="true"
+                >
+                  Disease
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="description-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#description"
+                  type="button"
+                  role="tab"
+                  aria-controls="description"
+                  aria-selected="false"
+                >
+                  Description
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="precautions-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#precautions"
+                  type="button"
+                  role="tab"
+                  aria-controls="precautions"
+                  aria-selected="false"
+                >
+                  Precautions
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="medications-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#medications"
+                  type="button"
+                  role="tab"
+                  aria-controls="medications"
+                  aria-selected="false"
+                >
+                  Medications
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="diet-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#diet"
+                  type="button"
+                  role="tab"
+                  aria-controls="diet"
+                  aria-selected="false"
+                >
+                  Diet
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="workout-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#workout"
+                  type="button"
+                  role="tab"
+                  aria-controls="workout"
+                  aria-selected="false"
+                >
+                  Keep Cautions!!
+                </button>
+              </li>
             </ul>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Medications Modal -->
-    <div
-      class="modal fade"
-      id="medicationsModal"
-      tabindex="-1"
-      aria-labelledby="medicationsModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div
-            class="modal-header"
-            style="background-color: #020606; color: white"
-          >
-            <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <ul>
-              {% for i in medications %}
-              <li>{{ i }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Workouts Modal -->
-    <div
-      class="modal fade"
-      id="workoutsModal"
-      tabindex="-1"
-      aria-labelledby="workoutsModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div
-            class="modal-header"
-            style="background-color: #020606; color: white"
-          >
-            <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <ul>
-              {% for i in workout %}
-              <li>{{ i }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Diets Modal -->
-    <div
-      class="modal fade"
-      id="dietsModal"
-      tabindex="-1"
-      aria-labelledby="dietsModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div
-            class="modal-header"
-            style="background-color: #020606; color: white"
-          >
-            <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <ul>
-              {% for i in my_diet %}
-              <li>{{ i }}</li>
-              {% endfor %}
-            </ul>
+            <!-- Tab Content -->
+            <div class="tab-content" id="resultTabsContent">
+              <div
+                class="tab-pane fade show active"
+                id="disease"
+                role="tabpanel"
+                aria-labelledby="disease-tab"
+              >
+                {{ predicted_disease }}
+              </div>
+              <div
+                class="tab-pane fade"
+                id="description"
+                role="tabpanel"
+                aria-labelledby="description-tab"
+              >
+                {{ predicted_description }}
+              </div>
+              <div
+                class="tab-pane fade"
+                id="precautions"
+                role="tabpanel"
+                aria-labelledby="precautions-tab"
+              >
+                <ul>
+                  {% for precaution in predicted_precautions %}
+                  <li>{{ precaution }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="medications"
+                role="tabpanel"
+                aria-labelledby="medications-tab"
+              >
+                <ul>
+                  {% for i in predicted_medications %}
+                  <li>{{ i }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="diet"
+                role="tabpanel"
+                aria-labelledby="diet-tab"
+              >
+                <ul>
+                  {% for i in predicted_diet %}
+                  <li>{{ i }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="workout"
+                role="tabpanel"
+                aria-labelledby="workout-tab"
+              >
+                <ul>
+                  {% for i in predicted_workout %}
+                  <li>{{ i }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
