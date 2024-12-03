@@ -60,11 +60,22 @@ def home():
             predicted_disease = get_predicted_value(user_symptoms)
             dis_des, precautions, medications, rec_diet, workout = helper(predicted_disease)
 
-            my_precautions = []
-            for i in precautions[0]:
-                my_precautions.append(i)
+        precaution_list = [str(item) for sublist in precautions for item in sublist if not pd.isnull(item)]
+        
+        medications_list = medications[0].replace('[', '').replace(']', '').replace("'", "").split(', ')
 
-            return render_template('index.html', predicted_disease=predicted_disease, dis_des=dis_des,my_precautions=my_precautions, medications=medications, my_diet=rec_diet,workout=workout)
+        diet_list = rec_diet[0].replace('[', '').replace(']', '').replace("'", "").split(', ')
+
+        workout_list = workout.to_list()
+        # Pass all data to the template
+        return render_template('index.html', 
+                               predicted_disease=predicted_disease,
+                               predicted_description=dis_des, 
+                               predicted_precautions=precaution_list,
+                               predicted_medications=medications_list,
+                               predicted_diet=diet_list,
+                               predicted_workout=workout_list,
+                               symptoms=symptoms)  
 
     return render_template('index.html')
 # about view funtion and path
